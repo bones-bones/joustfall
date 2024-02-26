@@ -1,5 +1,5 @@
 # It's joustfall, mostly tbd
-Like scryfall but for Hellscube. Also other stuff.
+Like scryfall but for Wizar Jousting. Also other stuff.
 
 
 
