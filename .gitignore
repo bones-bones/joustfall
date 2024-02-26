@@ -1,7 +1,5 @@
 
 
-/fetcher/src/secrets/omdbapiKey.ts
-public/movieData.json
 # dependencies
 /node_modules
 /.pnp
@@ -24,5 +22,3 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-pics/
-pics.zip
