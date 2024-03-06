@@ -25,7 +25,7 @@ export const toDeck = (cards: SpellCard[]) => {
       thing: { [i + 1 + ""]: thing },
       name: entry.Name,
       id: (i + 1) * 100,
-      description: entry.Text,
+      description: `Cost: ${entry.Cost}\nPitch: ${entry.Pitch}\n${entry.Text}`,
     });
 
     return mainCard;
