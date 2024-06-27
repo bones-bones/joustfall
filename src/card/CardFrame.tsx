@@ -4,6 +4,7 @@ import { SpellCard } from "../types";
 import { forwardRef } from "react";
 import { getBackground } from "../getBackground";
 import { textToRules } from "./textToRules";
+import { fontSizes } from "@workday/canvas-kit-react/dist/es6/tokens/lib/type/fontSizes";
 
 export const CardFrame = forwardRef(
   (
@@ -17,13 +18,11 @@ export const CardFrame = forwardRef(
     console.log(card.Image);
     return (
       <StyledFrame ref={frameRef as any} School={card.School}>
-        <Name>{card.Name}</Name>
+        <Name len={card.Name.length}>{card.Name}</Name>
         <Pitch>{card.Pitch}</Pitch>
         <Cost>{card.Cost}</Cost>
         <Subtypes>{card.Subtypes}</Subtypes>
-        <Rules
-          len={card.Text.length + (card.Text.split("<br>").length - 1) * 20}
-        >
+        <Rules len={card.Text.length + (card.Text.split("\n").length - 1) * 35}>
           {textToRules(card.Text)}
         </Rules>
         <Stability>{card.Stability}</Stability>
@@ -39,41 +38,65 @@ const WIDTH = 685 / FACTOR;
 const HEIGHT = 956 / FACTOR;
 // 685x956
 const Cost = styled.div({
-  top: 956 / 4.2 / FACTOR + "px",
+  top: 200 / FACTOR + "px",
   position: "absolute",
-  left: 685 / 7 / FACTOR + "px",
-  fontSize: "18px",
-  fontWeight: "bold",
+  left: 40 / FACTOR + "px",
+  fontSize: "33px",
+  width: "30px",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
 });
 
 const Pitch = styled.div({
-  top: 956 / 12 / FACTOR + "px",
+  top: 30 / FACTOR + "px",
   position: "absolute",
-  left: 685 / 7 / FACTOR + "px",
-  fontSize: "18px",
-  fontWeight: "bold",
-});
-const Name = styled.div({
-  width: 685 / FACTOR / 2.1 + "px",
-  position: "absolute",
-  height: 956 / 9 / FACTOR + "px",
-  top: 956 / 14 / FACTOR + "px",
-  left: 685 / 4 / FACTOR + 3 + "px",
+  left: 35 / FACTOR + "px",
+  fontSize: "30px",
+  width: "30px",
+  height: "30px",
   display: "flex",
   alignItems: "center",
+  justifyContent: "center",
 });
+const Name = styled.div(({ len }: { len: number }) => ({
+  position: "absolute",
+  height: "25px",
+  top: 40 / FACTOR + "px",
+  display: "flex",
+  width: "100%",
+  justifyContent: "center",
+  ...getNameSize(len),
+  alignItems: "center",
+}));
+
+const getNameSize = (len: number) => {
+  if (len < 19) {
+    return { fontSize: "15px" };
+  }
+  if (len < 21) {
+    return { fontSize: "14px" };
+  }
+  if (len < 30) {
+    return { fontSize: "12px" };
+  }
+  return { fontSize: "18px" };
+};
+
 const Subtypes = styled.div({
-  left: 50 / FACTOR + "px",
-  top: 520 / FACTOR + "px",
+  // left: 50 / FACTOR + "px",
+  top: 470 / FACTOR + "px",
   position: "relative",
+  display: "flex",
+  width: "100%",
+  justifyContent: "center",
 });
 
 const Stability = styled.div({
-  top: (956 - 90) / FACTOR + "px",
+  top: 825 / FACTOR + "px",
   position: "absolute",
-  left: 685 / 10 / FACTOR + 5 + "px",
-  fontSize: "18px",
-  fontWeight: "bold",
+  left: 55 / FACTOR + 5 + "px",
+  fontSize: "25px",
 });
 
 const Collector = styled.div({
@@ -101,15 +124,31 @@ const StyledFrame = styled.div(({ School }: { School: string }) => ({
 
 const Rules = styled.div(({ len }: { len: number }) => {
   return {
-    width: WIDTH - (50 * 2) / FACTOR + "px",
-    left: 50 / FACTOR + "px",
-    top: 550 / FACTOR + "px",
+    width: WIDTH - 110 / FACTOR + "px",
+    left: 60 / FACTOR + "px",
+    top: 510 / FACTOR + "px",
     position: "relative",
     height: "25%",
-    fontSize: "16px",
-    ...(len >= 70 && len < 124 && { fontSize: "14px", lineHeight: "14px" }),
-    ...(len >= 124 && len < 182 && { fontSize: "11px", lineHeight: "11px" }),
-    ...(len >= 182 && len < 290 && { fontSize: "11px", lineHeight: "12px" }), // The Ravenous Pact case
-    ...(len >= 290 && { fontSize: "10px", lineHeight: "11px" }), // Greatmoth
+    ...getCssFromLength(len),
   };
 });
+
+const getCssFromLength = (length: number) => {
+  if (length < 70) {
+    return { fontSize: "16px" };
+  }
+  if (length < 124) {
+    return { fontSize: "14px", lineHeight: "14px" };
+  }
+  if (length < 182) {
+    return { fontSize: "13px", lineHeight: "13px" };
+  }
+  if (length < 290) {
+    return { fontSize: "12px", lineHeight: "12px" }; // The Ravenous Pact case
+  }
+  if (length < 300) {
+    return { fontSize: "11px", lineHeight: "11px" }; // The Ravenous Pact case
+  }
+
+  return { fontSize: "10px", lineHeight: "10px" }; //// Greatmoth
+};

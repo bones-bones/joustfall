@@ -16,7 +16,7 @@ export const TrueFrame = ({
 }) => {
   const frameRef = useRef(null);
   return (
-    <>
+    <CardWithButton>
       <Container>
         {card.Subtypes === "Class" ? (
           <ClassFrame entry={card} ref={frameRef}></ClassFrame>
@@ -26,6 +26,7 @@ export const TrueFrame = ({
       </Container>
       {allowDownload && (
         <button
+          style={{ fontFamily: "crimsonNormal", width: "50%" }}
           onClick={() => {
             downloadElementAsImage(frameRef.current!, card.Name);
           }}
@@ -33,9 +34,16 @@ export const TrueFrame = ({
           save{" "}
         </button>
       )}
-    </>
+    </CardWithButton>
   );
 };
+
+const CardWithButton = styled.div({
+  display: "flex",
+  justifyContent: "center",
+  flexDirection: "column",
+  alignItems: "center",
+});
 const FACTOR = 3;
 const WIDTH = 685 / FACTOR;
 const HEIGHT = 956 / FACTOR;

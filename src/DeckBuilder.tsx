@@ -28,29 +28,25 @@ export const DeckBuilder = () => {
       <br></br>
       <textarea
         ref={textAreaRef}
-        id="decklistArea"
-        placeholder={`1 Drink Deep and Descend
-3 Detonate
-2 Flash Freeze
-...`}
-      ></textarea>
-      <br />
-      <button
-        onClick={() => {
+        onBlur={() => {
           const currentCards = textAreaRef.current?.value || "";
 
           const theDeck = currentCards
             .split("\n")
             .flatMap((entry) => {
-              const parsed = /(\d+) (.*)/.exec(entry);
+              const parsed = /(\d+)? ?(.*)$/.exec(entry);
+              const count = /^\d+/.exec(entry)?.[0];
+              console.log(parsed);
               if (parsed) {
-                const [, count, cardMaybe] = parsed;
+                const [, , cardMaybe] = parsed;
 
                 const theCard = cards.filter(
                   (cardEtry) => cardEtry.Name === cardMaybe
                 );
                 if (theCard) {
-                  const returnArray = new Array(parseInt(count)).fill(theCard);
+                  const returnArray = new Array(parseInt(count || "1")).fill(
+                    theCard
+                  );
                   return returnArray;
                 }
               }
@@ -59,9 +55,14 @@ export const DeckBuilder = () => {
             .flatMap((entry) => entry);
           setDeckCards(theDeck);
         }}
-      >
-        generate deck image
-      </button>
+        id="decklistArea"
+        placeholder={`1 Drink Deep and Descend
+3 Detonate
+2 Flash Freeze
+...`}
+      ></textarea>
+      <br />
+
       <button
         onClick={() => {
           html2pdf(deckRef.current!, {

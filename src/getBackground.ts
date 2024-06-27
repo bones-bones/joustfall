@@ -1,9 +1,9 @@
-import Primal from "./jpg/Primal.jpg";
+import Primal from "./card/new-frames/WildFrame.png";
 
-import Divine from "./jpg/Divine.jpg";
-import Deep from "./jpg/Deep.jpg";
-import Arcane from "./jpg/Arcane.jpeg";
-import Schooless from "./jpg/Schooless.jpg";
+import Divine from "./card/new-frames/DivineFrame.png";
+import Deep from "./card/new-frames/DeepFrame.png";
+import Arcane from "./card/new-frames/ArcaneFrame.png";
+import Schooless from "./card/new-frames/GenericFrame.png";
 
 export const getBackground = (school: string) => {
   if (school.includes("Deep")) {

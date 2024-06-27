@@ -38,7 +38,7 @@ export const useCards = () => {
       });
 
       const classes = await fetch(
-        "https://sheets.googleapis.com/v4/spreadsheets/1blTnmsPwc9zLU3tK8JbC0eYMN_rUuLb5-jU_1SiyVCg/values/Schools?alt=json&key=AIzaSyD5G8zjJvE9ZCbv-xE44qqqozUyDvu7GGI"
+        "https://sheets.googleapis.com/v4/spreadsheets/1blTnmsPwc9zLU3tK8JbC0eYMN_rUuLb5-jU_1SiyVCg/values/Classes?alt=json&key=AIzaSyD5G8zjJvE9ZCbv-xE44qqqozUyDvu7GGI"
       );
 
       const parsedClasses = (

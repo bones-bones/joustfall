@@ -2,11 +2,11 @@ import styled from "@emotion/styled";
 import { SpellCard } from "../types";
 import { forwardRef } from "react";
 
-import Primal from "./png/Primal_Frame.png";
+import Primal from "./new-frames/WildFrameclass.png";
 
-import Divine from "./png/Divine_Frame.png";
-import Deep from "./png/Deep_Frame.png";
-import Arcane from "./png/Arcane_Frame.png";
+import Divine from "./new-frames/DivineFrameclass.png";
+import Deep from "./new-frames/DeepFrameclass.png";
+import Arcane from "./new-frames/ArcaneFrameclass.png";
 import { textToRules } from "./textToRules";
 
 const getBackground = (school: string) => {
@@ -38,9 +38,7 @@ export const ClassFrame = forwardRef(
         <Name>{card.Name}</Name>
 
         <Subtypes>{card.Subtypes}</Subtypes>
-        <Rules
-          len={card.Text.length + (card.Text.split("<br>").length - 1) * 20}
-        >
+        <Rules len={card.Text.length + (card.Text.split("\n").length - 1) * 20}>
           {textToRules(card.Text)}
         </Rules>
         <Collector>{card["Collector Info"]} Wizard Joust</Collector>
@@ -51,7 +49,7 @@ export const ClassFrame = forwardRef(
 );
 ClassFrame.displayName = "ClassFrame";
 const FACTOR = 3;
-const WIDTH = 685 / FACTOR;
+const WIDTH = 600 / FACTOR;
 const HEIGHT = 956 / FACTOR;
 // 685x956
 
@@ -63,19 +61,22 @@ const Collector = styled.div({
 });
 
 const Name = styled.div({
-  fontSize: "25px",
-  width: 685 / FACTOR / 2.1 + "px",
+  fontSize: "20px",
+
   position: "absolute",
   height: 956 / 9 / FACTOR + "px",
-  top: 956 / 14 / FACTOR + "px",
-  left: 685 / 11 / FACTOR + "px",
+  top: 35 / FACTOR + "px",
+  //left: 685 / 11 / FACTOR + "px",
+  width: "100%",
   display: "flex",
-  alignItems: "center",
+  justifyContent: "center",
 });
 const Subtypes = styled.div({
-  left: 50 / FACTOR + "px",
-  top: 580 / FACTOR + "px",
+  // left: 50 / FACTOR + "px",
+  top: 475 / FACTOR + "px",
   position: "relative",
+  display: "flex",
+  justifyContent: "center",
 });
 const Rarity = styled.div({
   top: (956 - 90) / FACTOR + "px",
@@ -95,15 +96,29 @@ const StyledFrame = styled.div(({ School }: { School: string }) => ({
 
 const Rules = styled.div(({ len }: { len: number }) => {
   return {
-    width: WIDTH - (50 * 2) / FACTOR + "px",
-    left: 50 / FACTOR + "px",
-    top: 590 / FACTOR + "px",
+    width: WIDTH - 80 / FACTOR + "px",
+    left: 85 / FACTOR + "px",
+    top: 500 / FACTOR + "px",
     position: "relative",
     height: "25%",
+    //@ts-expect-error
     fontSize: "16px",
-    ...(len >= 70 && len < 124 && { fontSize: "14px", lineHeight: "14px" }),
-    ...(len >= 124 && len < 182 && { fontSize: "12px", lineHeight: "13px" }),
-    ...(len >= 182 && len < 290 && { fontSize: "10px", lineHeight: "11px" }), // the devil
-    ...(len >= 290 && { fontSize: "10px", lineHeight: "11px" }), // Greatmoth
+    ...getCssFromLength(len),
   };
 });
+
+const getCssFromLength = (length: number) => {
+  if (length < 70) {
+    return { fontSize: "16px" };
+  }
+  if (length < 124) {
+    return { fontSize: "14px", lineHeight: "14px" };
+  }
+  if (length < 182) {
+    return { fontSize: "13px", lineHeight: "13px" };
+  }
+  if (length < 290) {
+    return { fontSize: "12px", lineHeight: "12px" }; // th edevil
+  }
+  return { fontSize: "10px", lineHeight: "11px" };
+};
