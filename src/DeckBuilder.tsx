@@ -179,7 +179,7 @@ save as png
 const DeckContainer = styled.div({
   display: "flex",
   flexWrap: "wrap",
-  // maxWidth: (2.5 - 0.2) * 96 * 4 + "px",
+  width: "calc(6850px / 3)",
 });
 
 const Hand = styled.div({ display: "flex", flexDirection: "row" });
