@@ -25,6 +25,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "clean": "rm -rf node_modules && rm -rf dist",
     "eject": "react-scripts eject",
     "fix": "eslint --ext .ts,.tsx --fix ./src",
     "pretty": "prettier --write ."
