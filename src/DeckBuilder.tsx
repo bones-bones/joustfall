@@ -3,6 +3,7 @@ import { ClassFrame } from "./card/ClassFrame";
 import { CardFrame } from "./card/CardFrame";
 import { Class, SpellCard, Token } from "./types";
 import { tokenAtom, useCards } from "./useCards";
+import { downloadElementAsImage } from "./download-image"
 import styled from "@emotion/styled";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -64,7 +65,14 @@ export const DeckBuilder = () => {
 ...`}
       ></textarea>
       <br />
-
+      <button
+        onClick={() => {
+          console.log(toDeck(deckCards));
+          downloadElementAsImage(document.getElementById("deck-container")!, (nameRef.current?.value || "Wizard Joust deck"));
+        }}
+      >
+        download as image sheet
+      </button>
       <button
         onClick={() => {
           html2pdf(deckRef.current!, {
@@ -76,7 +84,7 @@ export const DeckBuilder = () => {
           });
         }}
       >
-        download as image sheet
+        download as printable PDF
       </button>
       <button
         onClick={() => {
@@ -140,7 +148,7 @@ export const DeckBuilder = () => {
         </div>
       )}
       <span>cards in deck: {deckCards.length}</span>
-      <DeckContainer ref={deckRef}>
+      <DeckContainer id="deck-container" ref={deckRef}>
         {deckCards.flatMap((entry, i) => {
           const toReturn = [];
 
@@ -179,7 +187,7 @@ save as png
 const DeckContainer = styled.div({
   display: "flex",
   flexWrap: "wrap",
-  // maxWidth: (2.5 - 0.2) * 96 * 4 + "px",
+  width: "calc(6850px / 3)",
 });
 
 const Hand = styled.div({ display: "flex", flexDirection: "row" });
