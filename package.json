@@ -6,7 +6,6 @@
   "dependencies": {
     "@emotion/react": "^11.1.5",
     "@emotion/styled": "^11.1.5",
-    "@use-gesture/react": "^10.2.20",
     "@workday/canvas-kit-labs-react": "^9.0.21",
     "@workday/canvas-kit-preview-react": "^9.0.21",
     "@workday/canvas-kit-react": "^9.0.21",
