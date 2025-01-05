@@ -10,6 +10,8 @@ import crimsonNormal from "./fonts/CrimsonText-Regular.ttf";
 import { DeckBuilder } from "./DeckBuilder";
 import { TrueFrame } from "./card/TrueFrame";
 import CardBack from "./card/new-frames/CardBackwhite.png";
+import { SpellCard } from "./types";
+
 // import { PlayGame } from "./PlayGame";
 
 const H1 = styled.h1({
@@ -20,17 +22,67 @@ const H1 = styled.h1({
 export const WizardJoust = () => {
   const cards = useCards();
   const [activeFilter, setActiveFilter] = useState<
-    "Arcane" | "Deep" | "Divine" | "Primal" | undefined
+    "Arcane" | "Deep" | "Divine" | "Primal" | "Generic" | undefined
   >();
+  const [sortOrder, setSortOrder] = useState<
+    "Alpha" | "Pitch" | "Cost" | "Stability" | "Default"
+  >("Default");
 
   const [deckBuilding, setdeckBuilding] = useState(false);
 
   const filteredCards = cards.filter(
     (entry) =>
       activeFilter === undefined ||
-      entry.School.includes(activeFilter) ||
-      entry.School.includes("Schooless")
+      entry.Class.includes(activeFilter) ||
+      entry.Class.includes("Generic")
   );
+
+  const sortedCards = filteredCards.sort((a, b) => {
+    switch (sortOrder) {
+      case "Alpha": {
+        return a.Name > b.Name ? 1 : -1;
+      }
+      case "Cost": {
+        const costA = (a as SpellCard).Cost ?? 0;
+        const costB = (b as SpellCard).Cost ?? 0;
+        if (costA > costB) {
+          return 1;
+        } else if (costA < costB) {
+          return -1;
+        } else {
+          return a.Name > b.Name ? 1 : -1;
+        }
+      }
+      case "Pitch": {
+        const costA = (a as SpellCard).Pitch ?? 0;
+        const costB = (b as SpellCard).Pitch ?? 0;
+        if (costA > costB) {
+          return 1;
+        } else if (costA < costB) {
+          return -1;
+        } else {
+          return a.Name > b.Name ? 1 : -1;
+        }
+      }
+      case "Stability": {
+        const costA = (a as SpellCard).Stability ?? 0;
+        const costB = (b as SpellCard).Stability ?? 0;
+        if (costA > costB) {
+          return 1;
+        } else if (costA < costB) {
+          return -1;
+        } else {
+          return a.Name > b.Name ? 1 : -1;
+        }
+      }
+      case "Default": {
+        return 0;
+      }
+      default: {
+        return 1;
+      }
+    }
+  });
 
   return (
     <>
@@ -122,13 +174,43 @@ export const WizardJoust = () => {
           >
             Primal
           </ClassButton>
+          <ClassButton
+            color="grey"
+            active={activeFilter === "Generic"}
+            onClick={() => {
+              if (activeFilter !== "Generic") {
+                setActiveFilter("Generic");
+              } else {
+                setActiveFilter(undefined);
+              }
+            }}
+          >
+            Generic
+          </ClassButton>
         </Filter>
+        <div>
+          <label htmlFor="sortSelector">Sort</label>
+          <select
+            id="sortSelector"
+            defaultValue={sortOrder}
+            onChange={(e) => {
+              // @ts-expect-error
+              setSortOrder(e.target.value);
+            }}
+          >
+            <option>Default</option>
+            <option>Alpha</option>
+            <option>Cost</option>
+            <option>Pitch</option>
+            <option>Stability</option>
+          </select>
+        </div>
         <CardContainer>
-          {filteredCards.map((entry) => {
+          {sortedCards.map((entry) => {
             return (
               <TrueFrame
                 key={entry.Name}
-                entry={entry}
+                entry={entry as SpellCard}
                 allowDownload
               ></TrueFrame>
             );

@@ -1,22 +1,24 @@
 import { useRef, useState } from "react";
 import { ClassFrame } from "./card/ClassFrame";
 import { CardFrame } from "./card/CardFrame";
-import { SpellCard } from "./types";
-import { useCards } from "./useCards";
+import { Class, SpellCard, Token } from "./types";
+import { tokenAtom, useCards } from "./useCards";
 import styled from "@emotion/styled";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import html2pdf from "html2pdf.js";
 import { toDeck } from "./deck-maker/toDeck";
+import { useAtomValue } from "jotai";
 
 export const DeckBuilder = () => {
-  const [deckCards, setDeckCards] = useState<SpellCard[]>([]);
+  const [deckCards, setDeckCards] = useState<(SpellCard | Class | Token)[]>([]);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const nameRef = useRef<HTMLInputElement>(null);
   const [sampleHand, setSampleHand] = useState<number[]>([]);
 
   const deckRef = useRef<HTMLDivElement>(null);
   const cards = useCards();
+  const tokens = useAtomValue(tokenAtom);
 
   return (
     <>
@@ -36,11 +38,11 @@ export const DeckBuilder = () => {
             .flatMap((entry) => {
               const parsed = /(\d+)? ?(.*)$/.exec(entry);
               const count = /^\d+/.exec(entry)?.[0];
-              console.log(parsed);
+
               if (parsed) {
                 const [, , cardMaybe] = parsed;
 
-                const theCard = cards.filter(
+                const theCard = [...cards, ...tokens].filter(
                   (cardEtry) => cardEtry.Name === cardMaybe
                 );
                 if (theCard) {
@@ -94,6 +96,27 @@ export const DeckBuilder = () => {
       >
         export for TTS
       </button>
+      <button
+        onClick={() => {
+          const toDownload = deckCards
+            .map((e) => {
+              return e.Name;
+            })
+            .join("\n");
+
+          const dataStr =
+            "data:text/plain;charset=utf-8," + encodeURIComponent(toDownload);
+          const dlAnchorElem = document.createElement("a");
+          dlAnchorElem.setAttribute("href", dataStr);
+          dlAnchorElem.setAttribute(
+            "download",
+            (nameRef.current?.value || "Wizard Joust deck") + ".txt"
+          );
+          dlAnchorElem.click();
+        }}
+      >
+        export for tournament
+      </button>
       {deckCards.length > 0 && (
         <div>
           <button
@@ -111,7 +134,7 @@ export const DeckBuilder = () => {
             {sampleHand
               .map((e) => deckCards[e])
               .map((entry, i) => {
-                return <CardFrame key={i} entry={entry} />;
+                return <CardFrame key={i} entry={entry as any as SpellCard} />;
               })}
           </Hand>
         </div>
@@ -122,13 +145,15 @@ export const DeckBuilder = () => {
           const toReturn = [];
 
           toReturn.push(
-            entry.Subtypes === "Class" ? (
-              <ClassFrame key={entry.Name + i} entry={entry}></ClassFrame>
+            entry.Types === "Class" ? (
+              <ClassFrame
+                key={entry.Name + i}
+                entry={entry as any as Class}
+              ></ClassFrame>
             ) : (
-              <CardFrame key={entry.Name + i} entry={entry} />
+              <CardFrame key={entry.Name + i} entry={entry as SpellCard} />
             )
           );
-          console.log(i, (i + 1) % 9 == 0);
           if ((i + 1) % 9 == 0) {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore

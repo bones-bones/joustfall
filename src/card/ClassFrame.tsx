@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { SpellCard } from "../types";
+import { Class } from "../types";
 import { forwardRef } from "react";
 
 import Primal from "./new-frames/WildFrameclass.png";
@@ -29,20 +29,19 @@ export const ClassFrame = forwardRef(
     {
       entry: card,
     }: {
-      entry: SpellCard;
+      entry: Class;
     },
     frameRef
   ) => {
     return (
-      <StyledFrame ref={frameRef as any} School={card.School}>
+      <StyledFrame ref={frameRef as any} School={card.Class}>
         <Name>{card.Name}</Name>
 
-        <Subtypes>{card.Subtypes}</Subtypes>
+        <Subtypes>{card.Types}</Subtypes>
         <Rules len={card.Text.length + (card.Text.split("\n").length - 1) * 20}>
           {textToRules(card.Text)}
         </Rules>
         <Collector>{card["Collector Info"]} Wizard Joust</Collector>
-        <Rarity>{card.Rarity}</Rarity>
       </StyledFrame>
     );
   }
@@ -54,6 +53,7 @@ const HEIGHT = 956 / FACTOR;
 // 685x956
 
 const Collector = styled.div({
+  color: "white",
   top: (956 - 90) / FACTOR + 5 + "px",
   position: "absolute",
   left: 685 / 2.8 / FACTOR - 10 + "px",
@@ -77,11 +77,6 @@ const Subtypes = styled.div({
   position: "relative",
   display: "flex",
   justifyContent: "center",
-});
-const Rarity = styled.div({
-  top: (956 - 90) / FACTOR + "px",
-  position: "absolute",
-  right: 685 / 13 / FACTOR + 5 + "px",
 });
 
 const StyledFrame = styled.div(({ School }: { School: string }) => ({

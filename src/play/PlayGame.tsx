@@ -5,6 +5,7 @@ import styled from "@emotion/styled";
 import { useCards } from "../useCards";
 import { CardFrame } from "../card/CardFrame";
 import { stackAtom } from "./stackAtom";
+import { SpellCard } from "../types";
 
 export const PlayGame = () => {
   const startRef = useRef(false);
@@ -56,7 +57,7 @@ export const PlayGame = () => {
               }}
             >
               {theCard ? (
-                <CardFrame entry={theCard} />
+                <CardFrame entry={theCard as any as SpellCard} />
               ) : (
                 <DumbCardFrame>{entry.type}</DumbCardFrame>
               )}

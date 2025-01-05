@@ -23,14 +23,14 @@ export const cardImpl: Record<
     startOfGame?: (state: GameAction<any>) => any;
     damageWouldBeDealt?: (payload: GameAction<DamagePayload>) => any;
     etb?: ({ field, source }: GameAction<any>) => any;
-    Subtypes: string;
+    Types: string;
     onBreak?: (state: GameAction<any>) => any;
     beginningOfTurn?: (state: GameAction<any>) => any;
   }
 > = {
-  "Summon Squirrel": { Subtypes: "Summon" },
+  "Summon Squirrel": { Types: "Summon" },
   Lich: {
-    Subtypes: "Lich",
+    Types: "Lich",
     endOfTurn: ({ self }): DamagePayload => {
       return {
         target: "druid",
@@ -42,7 +42,7 @@ export const cardImpl: Record<
     },
   },
   Druid: {
-    Subtypes: "Class",
+    Types: "Class",
     startOfGame: () => {
       return {
         action: "create",
@@ -82,7 +82,7 @@ export const cardImpl: Record<
             return field.filter((entry) => {
               return (
                 entry.controller === thisThing.controller &&
-                cardImpl[entry.type].Subtypes === "Summon"
+                cardImpl[entry.type].Types === "Summon"
               );
             });
           },
@@ -92,7 +92,7 @@ export const cardImpl: Record<
   },
 
   Ax: {
-    Subtypes: "Empheral",
+    Types: "Empheral",
     etb: ({ field, source, self }): SelectTarget<DamagePayload> => {
       return {
         action: "selectTarget",
@@ -111,37 +111,37 @@ export const cardImpl: Record<
     },
   },
   Paladin: {
-    Subtypes: "Class",
+    Types: "Class",
     endOfTurn: () => {
       // Add a defense counter
     },
   },
   "Magic Missiles": {
-    Subtypes: "Evocation",
+    Types: "Evocation",
     etb: () => {
       // target up to 3
     },
   },
   "Burning Brush": {
-    Subtypes: "Place",
+    Types: "Place",
     endOfTurn: () => {
       // filter to player, check cards in hand
     },
   },
   "Curing Caverns": {
-    Subtypes: "Place",
+    Types: "Place",
     onBreak: () => {
       //
     },
   },
   "Bold Fortune": {
-    Subtypes: "Enchantment",
+    Types: "Enchantment",
     beginningOfTurn: () => {
       // Dispatch combined effects of Break(this), all cards, draw 7 cards
     },
   },
   Burn: {
-    Subtypes: "Token",
+    Types: "Token",
     endOfTurn: (): CompositeAction => {
       return {
         action: "composite",
@@ -163,7 +163,7 @@ export const cardImpl: Record<
     },
   },
   "Turn to Flame": {
-    Subtypes: "Hex",
+    Types: "Hex",
     etb: ({ source, field }: GameAction): CompositeAction => {
       //
 

@@ -18,10 +18,10 @@ export const TrueFrame = ({
   return (
     <CardWithButton>
       <Container>
-        {card.Subtypes === "Class" ? (
-          <ClassFrame entry={card} ref={frameRef}></ClassFrame>
+        {card.Types === "Class" ? (
+          <ClassFrame entry={card} ref={frameRef} />
         ) : (
-          <CardFrame entry={card} ref={frameRef}></CardFrame>
+          <CardFrame entry={card} ref={frameRef} />
         )}
       </Container>
       {allowDownload && (

@@ -4,7 +4,6 @@ import { SpellCard } from "../types";
 import { forwardRef } from "react";
 import { getBackground } from "../getBackground";
 import { textToRules } from "./textToRules";
-import { fontSizes } from "@workday/canvas-kit-react/dist/es6/tokens/lib/type/fontSizes";
 
 export const CardFrame = forwardRef(
   (
@@ -15,13 +14,17 @@ export const CardFrame = forwardRef(
     },
     frameRef
   ) => {
-    console.log(card.Image);
     return (
-      <StyledFrame ref={frameRef as any} School={card.School}>
+      <StyledFrame ref={frameRef as any} School={card.Class}>
         <Name len={card.Name.length}>{card.Name}</Name>
-        <Pitch>{card.Pitch}</Pitch>
+        <Pitch>
+          {
+            //@ts-ignore
+            !isNaN(card.Pitch) ? card.Pitch : "-"
+          }
+        </Pitch>
         <Cost>{card.Cost}</Cost>
-        <Subtypes>{card.Subtypes}</Subtypes>
+        <Subtypes>{card.Types}</Subtypes>
         <Rules len={card.Text.length + (card.Text.split("\n").length - 1) * 35}>
           {textToRules(card.Text)}
         </Rules>
@@ -35,7 +38,6 @@ export const CardFrame = forwardRef(
 CardFrame.displayName = "CardFrame";
 const FACTOR = 3;
 const WIDTH = 685 / FACTOR;
-const HEIGHT = 956 / FACTOR;
 // 685x956
 const Cost = styled.div({
   top: 200 / FACTOR + "px",
@@ -100,7 +102,8 @@ const Stability = styled.div({
 });
 
 const Collector = styled.div({
-  top: (956 - 90) / FACTOR + 5 + "px",
+  color: "white",
+  top: 875 / FACTOR + 5 + "px",
   position: "absolute",
   left: 685 / 2.8 / FACTOR - 10 + "px",
   fontSize: "10px",

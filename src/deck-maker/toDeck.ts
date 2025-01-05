@@ -1,8 +1,8 @@
-import { SpellCard } from "../types";
+import { Base2 } from "../types";
 import { getBaseObject } from "./getBase";
 import { getCard } from "./getCard";
 
-export const toDeck = (cards: SpellCard[]) => {
+export const toDeck = (cards: Base2[]) => {
   const baseDeck = getBaseObject();
 
   const deckCards = cards.map((entry, i) => {
@@ -11,7 +11,7 @@ export const toDeck = (cards: SpellCard[]) => {
     const thing = {
       FaceURL: entry.Image,
       BackURL:
-        "https://ist7-1.filesor.com/pimpandhost.com/2/6/5/8/265896/f/x/K/D/fxKDU/Custom-Back_l.jpg",
+        "https://lh3.googleusercontent.com/d/17lh_9VtwOQpB7DDuGRURqvZwA9oKX2vP",
       NumWidth: 1,
       NumHeight: 1,
       BackIsHidden: true,
@@ -25,6 +25,7 @@ export const toDeck = (cards: SpellCard[]) => {
       thing: { [i + 1 + ""]: thing },
       name: entry.Name,
       id: (i + 1) * 100,
+      //@ts-ignore
       description: `Cost: ${entry.Cost}\nPitch: ${entry.Pitch}\n${entry.Text}`,
     });
 

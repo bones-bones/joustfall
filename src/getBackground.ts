@@ -6,18 +6,18 @@ import Arcane from "./card/new-frames/ArcaneFrame.png";
 import Schooless from "./card/new-frames/GenericFrame.png";
 
 export const getBackground = (school: string) => {
-  if (school.includes("Deep")) {
+  if (school?.includes("Deep")) {
     return Deep;
   }
 
-  if (school.includes("Divine")) {
+  if (school?.includes("Divine")) {
     return Divine;
   }
-  if (school.includes("Arcane")) {
+  if (school?.includes("Arcane")) {
     return Arcane;
   }
 
-  if (school.includes("Primal")) {
+  if (school?.includes("Primal")) {
     return Primal;
   }
 

@@ -1,6 +1,6 @@
 export const keywords: Record<string, string> = {
   Toll: "A toll is a cost that must be paid in order to resolve a spell’s effects. If you don't pay the toll, the spell's effects instead do nothing.",
-  Feedback:
+  Collapsing:
     "If an unstable spell would take damage exceeding its current Stability, it deals that excess to you.",
   Swift: "A swift spell can be cast at any time, not just during your turn.",
   Search:
