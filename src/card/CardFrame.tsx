@@ -16,6 +16,7 @@ export const CardFrame = forwardRef(
   ) => {
     return (
       <StyledFrame ref={frameRef as any} School={card.Class}>
+        {/* <DrawCanvas></DrawCanvas> */}
         <Name len={card.Name.length}>{card.Name}</Name>
         <Pitch>
           {
@@ -35,6 +36,9 @@ export const CardFrame = forwardRef(
     );
   }
 );
+
+// const DrawCanvas = styled.canvas({ width: 685 / 3, height: 956 / 3 });
+
 CardFrame.displayName = "CardFrame";
 const FACTOR = 3;
 const WIDTH = 685 / FACTOR;

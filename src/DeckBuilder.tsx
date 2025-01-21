@@ -3,7 +3,7 @@ import { ClassFrame } from "./card/ClassFrame";
 import { CardFrame } from "./card/CardFrame";
 import { Class, SpellCard, Token } from "./types";
 import { tokenAtom, useCards } from "./useCards";
-import { downloadElementAsImage } from "./download-image"
+import { downloadElementAsImage } from "./download-image";
 import styled from "@emotion/styled";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -15,6 +15,7 @@ export const DeckBuilder = () => {
   const [deckCards, setDeckCards] = useState<(SpellCard | Class | Token)[]>([]);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const nameRef = useRef<HTMLInputElement>(null);
+  const imageSheetRef = useRef<HTMLDivElement>(null);
   const [sampleHand, setSampleHand] = useState<number[]>([]);
 
   const deckRef = useRef<HTMLDivElement>(null);
@@ -68,7 +69,10 @@ export const DeckBuilder = () => {
       <button
         onClick={() => {
           console.log(toDeck(deckCards));
-          downloadElementAsImage(document.getElementById("deck-container")!, (nameRef.current?.value || "Wizard Joust deck"));
+          downloadElementAsImage(
+            imageSheetRef.current!,
+            nameRef.current?.value || "Wizard Joust deck"
+          );
         }}
       >
         download as image sheet
@@ -170,24 +174,42 @@ export const DeckBuilder = () => {
           return toReturn;
         })}
       </DeckContainer>
+      <div style={{ height: "0px" }}>
+        <ImageSheetPrinter ref={imageSheetRef}>
+          {deckCards.flatMap((entry, i) => {
+            const toReturn = [];
+
+            toReturn.push(
+              entry.Types === "Class" ? (
+                <ClassFrame
+                  key={entry.Name + i}
+                  entry={entry as any as Class}
+                ></ClassFrame>
+              ) : (
+                <CardFrame key={entry.Name + i} entry={entry as SpellCard} />
+              )
+            );
+            if ((i + 1) % 9 == 0) {
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+              // @ts-ignore
+              toReturn.push(<div className="break" height="100px" />);
+            }
+            return toReturn;
+          })}
+        </ImageSheetPrinter>
+      </div>
     </>
   );
 };
 
-{
-  /* <button
-onClick={() => {
-  downloadElementAsImage(frameRef.current!, card.Name);
-}}
->
-save as png
-</button> */
-}
-
 const DeckContainer = styled.div({
+  display: "flex",
+  flexWrap: "wrap",
+});
+
+const ImageSheetPrinter = styled.div({
   display: "flex",
   flexWrap: "wrap",
   width: "calc(6850px / 3)",
 });
-
 const Hand = styled.div({ display: "flex", flexDirection: "row" });

@@ -28,15 +28,15 @@ export const textToRules = (ruleText: string) => {
     });
 };
 
-const keywordRegexPattern =
-  "Swift|Toll|Collapsing|Search|Ritual|Instill|Immutable|Howl|Aegis|Amalgam|Subsume|Trap!|Unveil";
+const keywordRegexPattern = Object.keys(keywords).join("|");
+// "Swift|Toll|Collapsing|Search|Ritual|Instill|Immutable|Howl|Aegis|Amalgam|Subsume|Trap!|Unveil";
 
 const keywordRegex = new RegExp("^(" + keywordRegexPattern + ")$");
 
 const italicsRegex = /<i>[^<]*<\/i>/g;
 
 const tokenRegexPattern =
-  "Burn|Freeze|Home|Squirrel|Shield|Contract|Research|Bury";
+  "Acorn|Burn|Bury|Contract|Din|Home|Research|Shield|Squirrel|Sting";
 const tokenRegex = new RegExp(tokenRegexPattern);
 
 const combinedRegex = new RegExp(

@@ -43,8 +43,15 @@ export const WizardJoust = () => {
         return a.Name > b.Name ? 1 : -1;
       }
       case "Cost": {
-        const costA = (a as SpellCard).Cost ?? 0;
-        const costB = (b as SpellCard).Cost ?? 0;
+        //@ts-ignore
+        const costA = isNaN((a as SpellCard).Cost)
+          ? -10
+          : (a as SpellCard).Cost!;
+
+        //@ts-ignore
+        const costB = isNaN((b as SpellCard).Cost)
+          ? -10
+          : (b as SpellCard).Cost!;
         if (costA > costB) {
           return 1;
         } else if (costA < costB) {
@@ -54,8 +61,16 @@ export const WizardJoust = () => {
         }
       }
       case "Pitch": {
-        const costA = (a as SpellCard).Pitch ?? 0;
-        const costB = (b as SpellCard).Pitch ?? 0;
+        //@ts-ignore
+        const costA = isNaN((a as SpellCard).Pitch)
+          ? -10
+          : (a as SpellCard).Pitch!;
+
+        //@ts-ignore
+        const costB = isNaN((b as SpellCard).Pitch)
+          ? -10
+          : (b as SpellCard).Pitch!;
+
         if (costA > costB) {
           return 1;
         } else if (costA < costB) {
@@ -65,8 +80,15 @@ export const WizardJoust = () => {
         }
       }
       case "Stability": {
-        const costA = (a as SpellCard).Stability ?? 0;
-        const costB = (b as SpellCard).Stability ?? 0;
+        //@ts-ignore
+        const costA = isNaN((a as SpellCard).Stability)
+          ? -10
+          : (a as SpellCard).Stability!;
+
+        //@ts-ignore
+        const costB = isNaN((b as SpellCard).Stability)
+          ? -10
+          : (b as SpellCard).Stability!;
         if (costA > costB) {
           return 1;
         } else if (costA < costB) {
