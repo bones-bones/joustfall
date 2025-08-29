@@ -68,7 +68,7 @@ export const cardImpl: Record<
           nextAction: {
             action: "damageWouldBeDealt",
             amount,
-            source: source,
+            source,
           },
           source: field.find((entry) => entry.id === target)!,
 

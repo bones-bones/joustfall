@@ -8,6 +8,11 @@ const StyledSpan = styled.span({
 });
 
 export const textToRules = (ruleText: string) => {
+  // if(ruleText.includes('Howl')){
+  //   console.log( ruleText
+  //   .replaceAll(/<\/?b>/g, "")
+  //   .split(combinedRegex))
+  // }
   return ruleText
     .replaceAll(/<\/?b>/g, "")
     .split(combinedRegex)
@@ -36,7 +41,7 @@ const keywordRegex = new RegExp("^(" + keywordRegexPattern + ")$");
 const italicsRegex = /<i>[^<]*<\/i>/g;
 
 const tokenRegexPattern =
-  "Acorn|Burn|Bury|Contract|Din|Home|Research|Shield|Squirrel|Sting";
+  "Acorn|Burn|Bury|Contract|Din|Home|Research|Shield|Squirrel|Sting|Freeze";
 const tokenRegex = new RegExp(tokenRegexPattern);
 
 const combinedRegex = new RegExp(
